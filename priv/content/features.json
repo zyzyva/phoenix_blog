@@ -1,0 +1,15 @@
+{
+  "example_feature": {
+    "name": "Example Feature",
+    "label": "Example feature description",
+    "url": "https://example.com",
+    "url_note": null,
+    "pricing": "Free",
+    "description": "This is an example feature. Replace this file with your own features.json defining your product's features.",
+    "use_cases": [
+      "Example use case 1",
+      "Example use case 2"
+    ],
+    "cta": "Try it free at example.com"
+  }
+}

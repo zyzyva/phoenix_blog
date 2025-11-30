@@ -1,0 +1,15 @@
+{
+  "r2": {
+    "buckets": [
+      {
+        "name": "phoenix-blog-images",
+        "location": "enam",
+        "public": true,
+        "description": "Public bucket for blog images, feature screenshots, and AI-generated images"
+      }
+    ],
+    "access": {
+      "read_write": ["phoenix-blog-images"]
+    }
+  }
+}
