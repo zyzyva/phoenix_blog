@@ -1,8 +1,8 @@
-defmodule PhoenixBlog.Repo.Migrations.CreateBlogKeywords do
+defmodule PhoenixBlog.Repo.Migrations.CreateKeywords do
   use Ecto.Migration
 
   def change do
-    create table(:blog_keywords) do
+    create table(:keywords) do
       add :keyword, :string, null: false
       add :monthly_searches, :integer, default: 0
       add :competition, :string
@@ -29,11 +29,11 @@ defmodule PhoenixBlog.Repo.Migrations.CreateBlogKeywords do
       timestamps()
     end
 
-    create unique_index(:blog_keywords, [:keyword])
-    create index(:blog_keywords, [:category])
-    create index(:blog_keywords, [:intent])
-    create index(:blog_keywords, [:audience])
-    create index(:blog_keywords, [:blog_score])
-    create index(:blog_keywords, [:monthly_searches])
+    create unique_index(:keywords, [:keyword])
+    create index(:keywords, [:category])
+    create index(:keywords, [:intent])
+    create index(:keywords, [:audience])
+    create index(:keywords, [:blog_score])
+    create index(:keywords, [:monthly_searches])
   end
 end

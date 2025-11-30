@@ -38,16 +38,17 @@ defmodule PhoenixBlog.AI.ClaudeClient do
   - `{:error, reason}`
   """
   def generate_blog_post(topic, template_type, opts \\ []) do
-    if not configured?() do
-      {:error, "Anthropic API key not configured"}
-    else
-      template = PhoenixBlog.AI.BlogTemplates.get_template(template_type)
+    if configured?() do
+      alias PhoenixBlog.AI.BlogTemplates
+      template = BlogTemplates.get_template(template_type)
 
       if template do
         do_generate(topic, template, opts)
       else
         {:error, "Unknown template type: #{template_type}"}
       end
+    else
+      {:error, "Anthropic API key not configured"}
     end
   end
 

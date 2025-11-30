@@ -9,7 +9,7 @@ defmodule PhoenixBlog.Keywords.Keyword do
   @intents ~w(informational transactional navigational commercial)
   @audiences ~w(entrepreneurs small_business professionals networking_focused diy_creators general)
 
-  schema "blog_keywords" do
+  schema "keywords" do
     field :keyword, :string
     field :monthly_searches, :integer, default: 0
     field :competition, :string
@@ -97,18 +97,18 @@ defmodule PhoenixBlog.Keywords.Keyword do
   end
 
   defp maybe_set_is_question(changeset, kw) do
-    if get_field(changeset, :is_question) != nil do
+    if get_change(changeset, :is_question) != nil do
       changeset
     else
-      put_change(changeset, :is_question, is_question?(kw))
+      put_change(changeset, :is_question, question?(kw))
     end
   end
 
   defp maybe_set_is_branded(changeset, kw) do
-    if get_field(changeset, :is_branded) != nil do
+    if get_change(changeset, :is_branded) != nil do
       changeset
     else
-      put_change(changeset, :is_branded, is_branded?(kw))
+      put_change(changeset, :is_branded, branded?(kw))
     end
   end
 
@@ -122,8 +122,8 @@ defmodule PhoenixBlog.Keywords.Keyword do
       String.contains?(kw_lower, ["design", "template", "make", "create", "maker"]) -> "design"
       String.contains?(kw_lower, ["network", "event", "conference", "meetup"]) -> "networking"
       String.contains?(kw_lower, ["vs", "versus", "compare", "best", "top"]) -> "comparison"
-      is_question?(kw_lower) -> "question"
-      is_branded?(kw_lower) -> "brand"
+      question?(kw_lower) -> "question"
+      branded?(kw_lower) -> "brand"
       true -> "other"
     end
   end
@@ -138,7 +138,7 @@ defmodule PhoenixBlog.Keywords.Keyword do
       String.contains?(kw_lower, ["how to", "what is", "why", "guide", "tips", "ideas"]) ->
         "informational"
 
-      is_branded?(kw_lower) ->
+      branded?(kw_lower) ->
         "navigational"
 
       String.contains?(kw_lower, ["best", "top", "review", "compare", "vs"]) ->
@@ -149,7 +149,7 @@ defmodule PhoenixBlog.Keywords.Keyword do
     end
   end
 
-  defp is_question?(kw) do
+  defp question?(kw) do
     kw_lower = String.downcase(kw)
 
     String.contains?(kw_lower, [
@@ -167,7 +167,7 @@ defmodule PhoenixBlog.Keywords.Keyword do
     ])
   end
 
-  defp is_branded?(kw) do
+  defp branded?(kw) do
     kw_lower = String.downcase(kw)
 
     String.contains?(kw_lower, [
@@ -235,7 +235,7 @@ defmodule PhoenixBlog.Keywords.Keyword do
 
     volume_score =
       cond do
-        monthly_searches >= 10000 -> 30
+        monthly_searches >= 10_000 -> 30
         monthly_searches >= 5000 -> 25
         monthly_searches >= 1000 -> 20
         monthly_searches >= 500 -> 15
@@ -263,7 +263,7 @@ defmodule PhoenixBlog.Keywords.Keyword do
 
     question_bonus = if is_question, do: 15, else: 0
     branded_penalty = if is_branded, do: -30, else: 0
-    low_value_penalty = if is_low_value_keyword?(keyword), do: -40, else: 0
+    low_value_penalty = if low_value_keyword?(keyword), do: -40, else: 0
 
     score =
       volume_score + competition_score + intent_score + question_bonus + branded_penalty +
@@ -272,7 +272,7 @@ defmodule PhoenixBlog.Keywords.Keyword do
     put_change(changeset, :blog_score, max(score, 0))
   end
 
-  defp is_low_value_keyword?(keyword) do
+  defp low_value_keyword?(keyword) do
     kw_lower = String.downcase(keyword)
 
     product_only_patterns = [

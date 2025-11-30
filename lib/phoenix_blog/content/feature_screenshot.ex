@@ -8,7 +8,7 @@ defmodule PhoenixBlog.Content.FeatureScreenshot do
   use Ecto.Schema
   import Ecto.Changeset
 
-  schema "blog_feature_screenshots" do
+  schema "feature_screenshots" do
     field :feature_key, :string
     field :position, :integer, default: 0
     field :url, :string

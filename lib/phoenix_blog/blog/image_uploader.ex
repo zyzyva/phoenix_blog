@@ -6,6 +6,9 @@ defmodule PhoenixBlog.Blog.ImageUploader do
   and manage image storage.
   """
 
+  alias ExAws.Config
+  alias ExAws.S3
+
   @allowed_types ~w(image/jpeg image/png image/gif image/webp)
   @max_file_size 10 * 1024 * 1024
 
@@ -28,13 +31,7 @@ defmodule PhoenixBlog.Blog.ImageUploader do
         ]
 
         {:ok, presigned_url} =
-          ExAws.S3.presigned_url(
-            ExAws.Config.new(:s3),
-            :put,
-            config.bucket,
-            storage_key,
-            opts
-          )
+          S3.presigned_url(Config.new(:s3), :put, config.bucket, storage_key, opts)
 
         public_url = "#{config.public_url}/#{storage_key}"
 
@@ -119,7 +116,7 @@ defmodule PhoenixBlog.Blog.ImageUploader do
 
       result =
         config.bucket
-        |> ExAws.S3.put_object(storage_key, image_data, content_type: content_type)
+        |> S3.put_object(storage_key, image_data, content_type: content_type)
         |> ExAws.request()
 
       case result do
@@ -140,7 +137,7 @@ defmodule PhoenixBlog.Blog.ImageUploader do
     case get_storage_config() do
       {:ok, config} ->
         config.bucket
-        |> ExAws.S3.delete_object(storage_key)
+        |> S3.delete_object(storage_key)
         |> ExAws.request()
 
       {:error, reason} ->
@@ -177,14 +174,7 @@ defmodule PhoenixBlog.Blog.ImageUploader do
           query_params: [{"Content-Type", content_type}]
         ]
 
-        {:ok, url} =
-          ExAws.S3.presigned_url(
-            ExAws.Config.new(:s3),
-            :put,
-            config.bucket,
-            storage_key,
-            opts
-          )
+        {:ok, url} = S3.presigned_url(Config.new(:s3), :put, config.bucket, storage_key, opts)
 
         url
 

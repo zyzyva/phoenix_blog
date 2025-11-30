@@ -72,12 +72,11 @@ defmodule PhoenixBlog.Content.Features do
           end
 
         use_cases_text =
-          feature["use_cases"]
-          |> Enum.map(&("  * " <> &1))
-          |> Enum.join("\n")
+          Enum.map_join(feature["use_cases"], "\n", &("  * " <> &1))
 
         # Load screenshots from database
-        screenshots = PhoenixBlog.Content.FeatureScreenshots.list_screenshots(key)
+        alias PhoenixBlog.Content.FeatureScreenshots
+        screenshots = FeatureScreenshots.list_screenshots(key)
         screenshots_text = format_screenshots_for_prompt(screenshots)
 
         """
@@ -99,7 +98,7 @@ defmodule PhoenixBlog.Content.Features do
     screenshot_lines =
       screenshots
       |> Enum.with_index(1)
-      |> Enum.map(fn {screenshot, step_num} ->
+      |> Enum.map_join("\n", fn {screenshot, step_num} ->
         step_label =
           if screenshot.step_description do
             "Step #{step_num}: #{screenshot.step_description}"
@@ -115,7 +114,6 @@ defmodule PhoenixBlog.Content.Features do
         *#{caption}*
         """
       end)
-      |> Enum.join("\n")
 
     """
 

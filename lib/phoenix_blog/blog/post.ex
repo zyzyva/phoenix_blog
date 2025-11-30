@@ -10,7 +10,7 @@ defmodule PhoenixBlog.Blog.Post do
 
   @status_values ~w(draft published)
 
-  schema "blog_posts" do
+  schema "posts" do
     field :title, :string
     field :slug, :string
     field :content_markdown, :string
@@ -25,7 +25,7 @@ defmodule PhoenixBlog.Blog.Post do
     field :published_at, :utc_datetime
 
     belongs_to :user, PhoenixBlog.Blog.Author, foreign_key: :user_id
-    has_many :images, PhoenixBlog.Blog.Image, foreign_key: :blog_post_id
+    has_many :images, PhoenixBlog.Blog.Image, foreign_key: :post_id
 
     timestamps(type: :utc_datetime)
   end

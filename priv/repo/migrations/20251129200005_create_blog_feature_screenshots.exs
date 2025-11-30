@@ -1,8 +1,8 @@
-defmodule PhoenixBlog.Repo.Migrations.CreateBlogFeatureScreenshots do
+defmodule PhoenixBlog.Repo.Migrations.CreateFeatureScreenshots do
   use Ecto.Migration
 
   def change do
-    create table(:blog_feature_screenshots) do
+    create table(:feature_screenshots) do
       add :feature_key, :string, null: false
       add :position, :integer, default: 0, null: false
       add :url, :string, null: false
@@ -14,7 +14,7 @@ defmodule PhoenixBlog.Repo.Migrations.CreateBlogFeatureScreenshots do
       timestamps(type: :utc_datetime)
     end
 
-    create index(:blog_feature_screenshots, [:feature_key])
-    create index(:blog_feature_screenshots, [:feature_key, :position])
+    create index(:feature_screenshots, [:feature_key])
+    create index(:feature_screenshots, [:feature_key, :position])
   end
 end

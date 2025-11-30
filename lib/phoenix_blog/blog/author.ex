@@ -9,7 +9,7 @@ defmodule PhoenixBlog.Blog.Author do
   use Ecto.Schema
   import Ecto.Changeset
 
-  schema "blog_authors" do
+  schema "authors" do
     field :name, :string
     field :email, :string
     field :avatar_url, :string

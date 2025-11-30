@@ -75,7 +75,10 @@ defmodule PhoenixBlog.MixProject do
       {:ex_aws_s3, "~> 2.5"},
 
       # Google Cloud auth (optional, for Imagen)
-      {:goth, "~> 1.4", optional: true}
+      {:goth, "~> 1.4", optional: true},
+
+      # Code quality
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
     ]
   end
 

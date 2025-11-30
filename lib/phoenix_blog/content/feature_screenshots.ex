@@ -7,10 +7,11 @@ defmodule PhoenixBlog.Content.FeatureScreenshots do
   """
 
   import Ecto.Query
-  alias PhoenixBlog.Repo
+  alias ExAws.S3
+  alias PhoenixBlog.Blog.ImageUploader
   alias PhoenixBlog.Content.FeatureScreenshot
   alias PhoenixBlog.Content.ImageProcessor
-  alias PhoenixBlog.Blog.ImageUploader
+  alias PhoenixBlog.Repo
 
   @doc """
   Returns all screenshots for a feature, ordered by position.
@@ -28,7 +29,7 @@ defmodule PhoenixBlog.Content.FeatureScreenshots do
   def list_screenshots_by_features(feature_keys) when is_list(feature_keys) do
     FeatureScreenshot
     |> where([s], s.feature_key in ^feature_keys)
-    |> order_by([s], [asc: s.feature_key, asc: s.position])
+    |> order_by([s], asc: s.feature_key, asc: s.position)
     |> Repo.all()
     |> Enum.group_by(& &1.feature_key)
   end
@@ -38,7 +39,7 @@ defmodule PhoenixBlog.Content.FeatureScreenshots do
   """
   def list_all_screenshots do
     FeatureScreenshot
-    |> order_by([s], [asc: s.feature_key, asc: s.position])
+    |> order_by([s], asc: s.feature_key, asc: s.position)
     |> Repo.all()
     |> Enum.group_by(& &1.feature_key)
   end
@@ -218,13 +219,14 @@ defmodule PhoenixBlog.Content.FeatureScreenshots do
     uuid = Ecto.UUID.generate() |> String.slice(0, 8)
     sanitized = sanitize_filename(filename)
 
-    storage_key = "blog/images/feature-screenshots/#{safe_key}/#{year}/#{month}/#{uuid}-#{sanitized}"
+    storage_key =
+      "blog/images/feature-screenshots/#{safe_key}/#{year}/#{month}/#{uuid}-#{sanitized}"
 
     case get_storage_config() do
       {:ok, config} ->
         result =
           config.bucket
-          |> ExAws.S3.put_object(storage_key, image_data, content_type: content_type)
+          |> S3.put_object(storage_key, image_data, content_type: content_type)
           |> ExAws.request()
 
         case result do

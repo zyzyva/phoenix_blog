@@ -7,8 +7,8 @@ defmodule PhoenixBlog.Keywords do
   """
 
   import Ecto.Query
-  alias PhoenixBlog.Repo
   alias PhoenixBlog.Keywords.Keyword
+  alias PhoenixBlog.Repo
 
   @doc """
   Returns the list of all keywords.
@@ -183,7 +183,7 @@ defmodule PhoenixBlog.Keywords do
 
     volume_score =
       cond do
-        monthly_searches >= 10000 -> 30
+        monthly_searches >= 10_000 -> 30
         monthly_searches >= 5000 -> 25
         monthly_searches >= 1000 -> 20
         monthly_searches >= 500 -> 15
@@ -211,7 +211,7 @@ defmodule PhoenixBlog.Keywords do
 
     question_bonus = if is_question, do: 15, else: 0
     branded_penalty = if is_branded, do: -30, else: 0
-    low_value_penalty = if is_low_value_keyword?(kw_text), do: -40, else: 0
+    low_value_penalty = if low_value_keyword?(kw_text), do: -40, else: 0
 
     score =
       volume_score + competition_score + intent_score + question_bonus + branded_penalty +
@@ -220,7 +220,7 @@ defmodule PhoenixBlog.Keywords do
     max(score, 0)
   end
 
-  defp is_low_value_keyword?(keyword) do
+  defp low_value_keyword?(keyword) do
     kw_lower = String.downcase(keyword)
 
     product_only_patterns = [
@@ -391,7 +391,9 @@ defmodule PhoenixBlog.Keywords do
 
   defp apply_sort(query, :keyword, :asc), do: order_by(query, [k], asc: k.keyword)
   defp apply_sort(query, :keyword, :desc), do: order_by(query, [k], desc: k.keyword)
-  defp apply_sort(query, :monthly_searches, :asc), do: order_by(query, [k], asc: k.monthly_searches)
+
+  defp apply_sort(query, :monthly_searches, :asc),
+    do: order_by(query, [k], asc: k.monthly_searches)
 
   defp apply_sort(query, :monthly_searches, :desc),
     do: order_by(query, [k], desc: k.monthly_searches)

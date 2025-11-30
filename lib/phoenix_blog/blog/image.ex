@@ -11,7 +11,7 @@ defmodule PhoenixBlog.Blog.Image do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :id
 
-  schema "blog_images" do
+  schema "images" do
     field :filename, :string
     field :storage_key, :string
     field :url, :string
@@ -19,7 +19,7 @@ defmodule PhoenixBlog.Blog.Image do
     field :file_size, :integer
     field :alt_text, :string
 
-    belongs_to :blog_post, PhoenixBlog.Blog.Post
+    belongs_to :post, PhoenixBlog.Blog.Post
     belongs_to :user, PhoenixBlog.Blog.Author, foreign_key: :user_id
 
     timestamps(type: :utc_datetime)
@@ -37,12 +37,12 @@ defmodule PhoenixBlog.Blog.Image do
       :content_type,
       :file_size,
       :alt_text,
-      :blog_post_id,
+      :post_id,
       :user_id
     ])
     |> validate_required([:filename, :storage_key, :url, :content_type, :user_id])
     |> validate_length(:alt_text, max: 125)
-    |> foreign_key_constraint(:blog_post_id)
+    |> foreign_key_constraint(:post_id)
     |> foreign_key_constraint(:user_id)
   end
 
@@ -51,8 +51,8 @@ defmodule PhoenixBlog.Blog.Image do
   """
   def associate_changeset(image, attrs) do
     image
-    |> cast(attrs, [:blog_post_id, :alt_text])
+    |> cast(attrs, [:post_id, :alt_text])
     |> validate_length(:alt_text, max: 125)
-    |> foreign_key_constraint(:blog_post_id)
+    |> foreign_key_constraint(:post_id)
   end
 end

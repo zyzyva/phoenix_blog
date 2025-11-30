@@ -4,8 +4,8 @@ defmodule PhoenixBlog.Blog do
   """
 
   import Ecto.Query, warn: false
+  alias PhoenixBlog.Blog.{Author, Image, Post}
   alias PhoenixBlog.Repo
-  alias PhoenixBlog.Blog.{Post, Image, Author}
 
   # ============================================================================
   # Blog Post Functions
@@ -173,7 +173,7 @@ defmodule PhoenixBlog.Blog do
   """
   def list_images_for_post(post_id) do
     Image
-    |> where([i], i.blog_post_id == ^post_id)
+    |> where([i], i.post_id == ^post_id)
     |> order_by([i], desc: i.inserted_at)
     |> Repo.all()
   end
@@ -183,7 +183,7 @@ defmodule PhoenixBlog.Blog do
   """
   def list_orphan_images(author_id) when is_integer(author_id) do
     Image
-    |> where([i], is_nil(i.blog_post_id) and i.user_id == ^author_id)
+    |> where([i], is_nil(i.post_id) and i.user_id == ^author_id)
     |> order_by([i], desc: i.inserted_at)
     |> Repo.all()
   end
@@ -200,7 +200,7 @@ defmodule PhoenixBlog.Blog do
   """
   def associate_image_with_post(%Image{} = image, post_id) do
     image
-    |> Image.associate_changeset(%{blog_post_id: post_id})
+    |> Image.associate_changeset(%{post_id: post_id})
     |> Repo.update()
   end
 
@@ -235,7 +235,9 @@ defmodule PhoenixBlog.Blog do
   Gets or creates an author from host app user data.
   """
   def get_or_create_author(attrs) do
-    case get_author_by_external_id(attrs["external_id"] || attrs[:external_id]) do
+    external_id = attrs["external_id"] || attrs[:external_id]
+
+    case external_id && get_author_by_external_id(external_id) do
       nil ->
         %Author{}
         |> Author.changeset(attrs)

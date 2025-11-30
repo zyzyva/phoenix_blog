@@ -43,10 +43,10 @@ defmodule PhoenixBlog.AI.ImagenClient do
   - `{:error, reason}` - If generation fails
   """
   def generate_image(prompt, opts \\ []) do
-    if not configured?() do
-      {:error, "Google Cloud credentials not configured"}
-    else
+    if configured?() do
       do_generate(prompt, opts)
+    else
+      {:error, "Google Cloud credentials not configured"}
     end
   end
 
