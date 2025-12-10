@@ -78,7 +78,10 @@ defmodule PhoenixBlog.MixProject do
       {:goth, "~> 1.4"},
 
       # Code quality
-      {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+
+      # Background jobs
+      {:oban, "~> 2.20"}
     ]
   end
 

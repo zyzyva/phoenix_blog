@@ -20,6 +20,29 @@ if System.get_env("PHX_SERVER") do
   config :phoenix_blog, PhoenixBlogWeb.Endpoint, server: true
 end
 
+# Social media API credentials (all environments)
+config :phoenix_blog,
+  # Twitter/X OAuth 2.0
+  twitter_client_id: System.get_env("TWITTER_CLIENT_ID"),
+  twitter_client_secret: System.get_env("TWITTER_CLIENT_SECRET"),
+  twitter_callback_url: System.get_env("TWITTER_CALLBACK_URL"),
+  # LinkedIn OAuth 2.0
+  linkedin_client_id: System.get_env("LINKEDIN_CLIENT_ID"),
+  linkedin_client_secret: System.get_env("LINKEDIN_CLIENT_SECRET"),
+  linkedin_callback_url: System.get_env("LINKEDIN_CALLBACK_URL"),
+  # Reddit OAuth 2.0
+  reddit_client_id: System.get_env("REDDIT_CLIENT_ID"),
+  reddit_client_secret: System.get_env("REDDIT_CLIENT_SECRET"),
+  reddit_callback_url: System.get_env("REDDIT_CALLBACK_URL"),
+  # GitHub webhook
+  github_webhook_secret: System.get_env("GITHUB_WEBHOOK_SECRET"),
+  # Marketing API key (for GitHub Action)
+  marketing_api_key: System.get_env("MARKETING_API_KEY"),
+  # Claude API (for content generation)
+  anthropic_api_key: System.get_env("ANTHROPIC_API_KEY"),
+  # Twitter/X Bearer Token (for research - requires $200/month Basic tier)
+  twitter_bearer_token: System.get_env("TWITTER_BEARER_TOKEN")
+
 if config_env() == :prod do
   database_url =
     System.get_env("DATABASE_URL") ||

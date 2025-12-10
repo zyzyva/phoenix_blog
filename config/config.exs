@@ -51,6 +51,23 @@ config :logger, :default_formatter,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+# Oban background job configuration
+config :phoenix_blog, Oban,
+  repo: PhoenixBlog.Repo,
+  queues: [default: 10, publishing: 5, analytics: 3, scheduled: 2],
+  plugins: [
+    Oban.Plugins.Pruner,
+    {Oban.Plugins.Cron,
+     crontab: [
+       # Check for scheduled posts every minute
+       {"* * * * *", PhoenixBlog.Social.Workers.ScheduledPublisherWorker},
+       # Fetch analytics hourly
+       {"0 * * * *", PhoenixBlog.Social.Workers.BatchAnalyticsWorker},
+       # Refresh expiring tokens daily at 3 AM
+       {"0 3 * * *", PhoenixBlog.Social.Workers.TokenRefreshWorker}
+     ]}
+  ]
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"

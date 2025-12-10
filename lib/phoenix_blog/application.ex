@@ -12,7 +12,8 @@ defmodule PhoenixBlog.Application do
         PhoenixBlogWeb.Telemetry,
         PhoenixBlog.Repo,
         {DNSCluster, query: Application.get_env(:phoenix_blog, :dns_cluster_query) || :ignore},
-        {Phoenix.PubSub, name: PhoenixBlog.PubSub}
+        {Phoenix.PubSub, name: PhoenixBlog.PubSub},
+        {Oban, Application.fetch_env!(:phoenix_blog, Oban)}
       ] ++
         goth_child_spec() ++
         [
