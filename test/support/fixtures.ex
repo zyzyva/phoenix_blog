@@ -143,4 +143,20 @@ defmodule PhoenixBlog.Fixtures do
 
     entry
   end
+
+  def tactic_fixture(attrs \\ %{}) do
+    {:ok, tactic} =
+      %PhoenixBlog.Research.Tactic{}
+      |> PhoenixBlog.Research.Tactic.changeset(
+        Enum.into(attrs, %{
+          title: "Test Tactic #{System.unique_integer()}",
+          source_platform: "reddit",
+          description: "A marketing tactic to test",
+          category: "content"
+        })
+      )
+      |> Repo.insert()
+
+    tactic
+  end
 end
