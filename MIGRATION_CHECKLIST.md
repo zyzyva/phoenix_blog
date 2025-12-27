@@ -14,19 +14,19 @@ This checklist tracks all blog-related items that need to be migrated from conta
 
 These modules handle AI content and image generation. They should be the authoritative versions in phoenix_blog.
 
-- [ ] **Claude Client** (`lib/contacts4us/ai/claude_client.ex`)
+- [x] **Claude Client** (`lib/contacts4us/ai/claude_client.ex`)
   - Purpose: Claude API integration for blog content generation
-  - Status: Version exists in phoenix_blog - need to compare and merge
+  - Status: Done - exists in phoenix_blog at `lib/phoenix_blog/ai/claude_client.ex`
   - Lines: ~249
 
-- [ ] **Imagen Client** (`lib/contacts4us/ai/imagen_client.ex`)
+- [x] **Imagen Client** (`lib/contacts4us/ai/imagen_client.ex`)
   - Purpose: Google Vertex AI Imagen for featured image generation
-  - Status: Version exists in phoenix_blog - need to compare and merge
+  - Status: Done - exists in phoenix_blog at `lib/phoenix_blog/ai/imagen_client.ex`
   - Lines: ~223
 
-- [ ] **Blog Templates** (`lib/contacts4us/ai/blog_templates.ex`)
+- [x] **Blog Templates** (`lib/contacts4us/ai/blog_templates.ex`)
   - Purpose: Prompts and templates for AI content generation
-  - Status: Version exists in phoenix_blog - need to compare and merge
+  - Status: Done - exists in phoenix_blog at `lib/phoenix_blog/ai/blog_templates.ex`
   - Lines: ~231
 
 ---
@@ -35,18 +35,18 @@ These modules handle AI content and image generation. They should be the authori
 
 Keyword research and management for SEO-optimized blog content.
 
-- [ ] **Keywords Context** (`lib/contacts4us/keywords.ex`)
+- [x] **Keywords Context** (`lib/contacts4us/keywords.ex`)
   - Purpose: Main context for keyword CRUD, filtering, sorting, stats
-  - Status: Version exists in phoenix_blog - need to compare and merge
+  - Status: Done - exists in phoenix_blog at `lib/phoenix_blog/keywords.ex`
 
-- [ ] **Keyword Schema** (`lib/contacts4us/keywords/keyword.ex`)
+- [x] **Keyword Schema** (`lib/contacts4us/keywords/keyword.ex`)
   - Purpose: Schema with auto-categorization, audience detection, blog scoring
-  - Status: Version exists in phoenix_blog - need to compare and merge
+  - Status: Done - exists in phoenix_blog at `lib/phoenix_blog/keywords/keyword.ex`
   - Lines: ~320
 
-- [ ] **CSV Importer** (`lib/contacts4us/keywords/csv_importer.ex`)
+- [x] **CSV Importer** (`lib/contacts4us/keywords/csv_importer.ex`)
   - Purpose: Import keywords from CSV files with categorization
-  - Status: Version exists in phoenix_blog - need to compare and merge
+  - Status: Done - exists in phoenix_blog at `lib/phoenix_blog/keywords/csv_importer.ex`
   - Lines: ~257
 
 - [ ] **Import Keywords Task** (`lib/mix/tasks/keywords/import_keywords.ex`)
@@ -59,24 +59,24 @@ Keyword research and management for SEO-optimized blog content.
 
 Feature documentation with screenshots for blog content.
 
-- [ ] **Features Context** (`lib/contacts4us/content/features.ex`)
+- [x] **Features Context** (`lib/contacts4us/content/features.ex`)
   - Purpose: Manage product features with descriptions
-  - Status: Version exists in phoenix_blog - need to compare and merge
+  - Status: Done - exists in phoenix_blog at `lib/phoenix_blog/content/features.ex`
   - Lines: ~174
 
-- [ ] **Feature Screenshot Schema** (`lib/contacts4us/content/feature_screenshot.ex`)
+- [x] **Feature Screenshot Schema** (`lib/contacts4us/content/feature_screenshot.ex`)
   - Purpose: Schema for feature screenshots
-  - Status: Version exists in phoenix_blog - need to compare and merge
+  - Status: Done - exists in phoenix_blog at `lib/phoenix_blog/content/feature_screenshot.ex`
   - Lines: ~35
 
-- [ ] **Feature Screenshots Context** (`lib/contacts4us/content/feature_screenshots.ex`)
+- [x] **Feature Screenshots Context** (`lib/contacts4us/content/feature_screenshots.ex`)
   - Purpose: CRUD for feature screenshots with ordering
-  - Status: Version exists in phoenix_blog - need to compare and merge
+  - Status: Done - exists in phoenix_blog at `lib/phoenix_blog/content/feature_screenshots.ex`
   - Lines: ~266
 
-- [ ] **Image Processor** (`lib/contacts4us/content/image_processor.ex`)
+- [x] **Image Processor** (`lib/contacts4us/content/image_processor.ex`)
   - Purpose: ImageMagick integration for image resizing/processing
-  - Status: Version exists in phoenix_blog - need to compare and merge
+  - Status: Done - exists in phoenix_blog at `lib/phoenix_blog/content/image_processor.ex`
   - Lines: ~116
 
 ---
@@ -85,23 +85,23 @@ Feature documentation with screenshots for blog content.
 
 Core blog functionality including posts and images.
 
-- [ ] **Blog Context** (`lib/contacts4us/blog.ex`)
+- [x] **Blog Context** (`lib/contacts4us/blog.ex`)
   - Purpose: Main blog context with CRUD for posts, images
-  - Status: Version exists in phoenix_blog - need to compare and merge
+  - Status: Done - exists in phoenix_blog at `lib/phoenix_blog/blog.ex`
 
-- [ ] **Blog Post Schema** (`lib/contacts4us/blog/blog_post.ex`)
+- [x] **Blog Post Schema** (`lib/contacts4us/blog/blog_post.ex`)
   - Purpose: Schema for blog posts with markdown support
-  - Status: phoenix_blog uses `Post` schema - decide on naming
+  - Status: Done - phoenix_blog uses `Post` at `lib/phoenix_blog/blog/post.ex`
   - Lines: ~136
 
-- [ ] **Blog Image Schema** (`lib/contacts4us/blog/blog_image.ex`)
+- [x] **Blog Image Schema** (`lib/contacts4us/blog/blog_image.ex`)
   - Purpose: Schema for blog images linked to posts
-  - Status: phoenix_blog uses `Image` schema - decide on naming
+  - Status: Done - phoenix_blog uses `Image` at `lib/phoenix_blog/blog/image.ex`
   - Lines: ~58
 
-- [ ] **Image Uploader** (`lib/contacts4us/blog/image_uploader.ex`)
+- [x] **Image Uploader** (`lib/contacts4us/blog/image_uploader.ex`)
   - Purpose: Waffle uploader config for R2 storage
-  - Status: Version exists in phoenix_blog - need to compare and merge
+  - Status: Done - exists in phoenix_blog at `lib/phoenix_blog/blog/image_uploader.ex`
   - Lines: ~219
 
 ---
@@ -288,3 +288,79 @@ After moving all items:
 - **phoenix_blog adds Author schema**: contacts4us doesn't have author support
 - **All admin interfaces move to phoenix_blog**: contacts4us becomes read-only consumer
 - **API keys stay in phoenix_blog**: No AI keys in contacts4us production
+
+---
+
+## 14. Research Pipeline (NEW)
+
+New modules added for competitor research and content generation pipeline.
+
+### AI Clients
+
+- [x] **GeminiClient** (`lib/phoenix_blog/ai/gemini_client.ex`)
+  - Purpose: Google Gemini API for image generation
+- [x] **HuggingFaceClient** (`lib/phoenix_blog/ai/huggingface_client.ex`)
+  - Purpose: Unified router to Fal AI, Replicate, Together, etc.
+- [x] **ReplicateClient** (`lib/phoenix_blog/ai/replicate_client.ex`)
+  - Purpose: Direct Replicate API access
+- [x] **ImageGenerator** (`lib/phoenix_blog/ai/image_generator.ex`)
+  - Purpose: Unified image generation interface
+- [x] **VideoGenerator** (`lib/phoenix_blog/ai/video_generator.ex`)
+  - Purpose: Unified video generation interface
+
+### Research Clients
+
+- [x] **ApifyClient** (`lib/phoenix_blog/research/apify_client.ex`)
+  - Purpose: Social media scraping (Facebook, Instagram, TikTok)
+- [x] **AdLibraryClient** (`lib/phoenix_blog/research/ad_library_client.ex`)
+  - Purpose: Meta Ad Library API for competitor ads
+- [x] **GraphClient** (`lib/phoenix_blog/research/graph_client.ex`)
+  - Purpose: Facebook Graph API for page posts/comments
+
+### Research Pipeline Schemas
+
+- [x] **Competitor** (`lib/phoenix_blog/competitors/competitor.ex`)
+  - Purpose: Track competitor profiles
+- [x] **ResearchJob** (`lib/phoenix_blog/research/research_job.ex`)
+  - Purpose: Async scraping job tracking
+- [x] **ResearchData** (`lib/phoenix_blog/research/research_data.ex`)
+  - Purpose: Scraped content with sentiment
+- [x] **Insight** (`lib/phoenix_blog/insights/insight.ex`)
+  - Purpose: AI-generated insights
+- [x] **ContentGeneration** (`lib/phoenix_blog/generations/content_generation.ex`)
+  - Purpose: Content generation queue
+- [x] **Webhook** (`lib/phoenix_blog/delivery/webhook.ex`)
+  - Purpose: Webhook configurations
+- [x] **CostEntry** (`lib/phoenix_blog/costs/cost_entry.ex`)
+  - Purpose: Usage cost tracking
+
+### Contexts
+
+- [x] **Competitors** (`lib/phoenix_blog/competitors.ex`)
+  - Purpose: Competitor CRUD
+- [x] **Costs** (`lib/phoenix_blog/costs.ex`)
+  - Purpose: Cost recording and aggregation
+- [ ] **Insights** - Todo
+- [ ] **Generations** - Todo
+- [ ] **Delivery** - Todo
+
+### Database Migrations
+
+- [x] `create_competitors` - Competitor profiles
+- [x] `create_research_jobs` - Async job tracking
+- [x] `create_research_data` - Scraped content
+- [x] `create_insights` - AI insights
+- [x] `create_content_generations` - Generation queue
+- [x] `create_webhooks` - Webhook configs
+- [x] `create_cost_tracking` - Usage costs
+- [x] `add_user_id_to_research_tactics` - Multi-tenant support
+
+### Oban Workers (Todo)
+
+- [ ] `CompetitorScrapeWorker` - Run Apify actors
+- [ ] `AdLibraryWorker` - Search Meta Ad Library
+- [ ] `InsightGenerationWorker` - Generate insights from data
+- [ ] `ImageGenerationWorker` - AI images
+- [ ] `VideoGenerationWorker` - AI videos
+- [ ] `EmailDeliveryWorker` - Send via Swoosh
+- [ ] `WebhookDeliveryWorker` - POST with HMAC
