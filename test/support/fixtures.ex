@@ -159,4 +159,40 @@ defmodule PhoenixBlog.Fixtures do
 
     tactic
   end
+
+  def social_account_fixture(attrs \\ %{}) do
+    author = attrs[:author] || author_fixture()
+
+    {:ok, account} =
+      %PhoenixBlog.Social.Account{}
+      |> PhoenixBlog.Social.Account.changeset(
+        Enum.into(attrs, %{
+          platform: "twitter",
+          platform_user_id: "user_#{System.unique_integer()}",
+          platform_username: "testuser#{System.unique_integer()}",
+          access_token: :crypto.strong_rand_bytes(32),
+          user_id: author.id
+        })
+      )
+      |> Repo.insert()
+
+    account
+  end
+
+  def social_post_fixture(attrs \\ %{}) do
+    author = attrs[:author] || author_fixture()
+
+    {:ok, post} =
+      %PhoenixBlog.Social.Post{}
+      |> PhoenixBlog.Social.Post.changeset(
+        Enum.into(attrs, %{
+          content_text: "Test social post #{System.unique_integer()}",
+          content_type: "text",
+          user_id: author.id
+        })
+      )
+      |> Repo.insert()
+
+    post
+  end
 end
