@@ -340,9 +340,12 @@ New modules added for competitor research and content generation pipeline.
   - Purpose: Competitor CRUD
 - [x] **Costs** (`lib/phoenix_blog/costs.ex`)
   - Purpose: Cost recording and aggregation
-- [ ] **Insights** - Todo
-- [ ] **Generations** - Todo
-- [ ] **Delivery** - Todo
+- [ ] **Insights** (`lib/phoenix_blog/insights.ex`)
+  - Purpose: Insight CRUD - Not yet created (schema exists)
+- [ ] **Generations** (`lib/phoenix_blog/generations.ex`)
+  - Purpose: Generation queue management - Not yet created (schema exists)
+- [ ] **Delivery** (`lib/phoenix_blog/delivery.ex`)
+  - Purpose: Webhook/email delivery - Not yet created (schema exists)
 
 ### Database Migrations
 
@@ -355,8 +358,9 @@ New modules added for competitor research and content generation pipeline.
 - [x] `create_cost_tracking` - Usage costs
 - [x] `add_user_id_to_research_tactics` - Multi-tenant support
 
-### Oban Workers (Todo)
+### Oban Workers
 
+**Research Pipeline Workers (Todo):**
 - [ ] `CompetitorScrapeWorker` - Run Apify actors
 - [ ] `AdLibraryWorker` - Search Meta Ad Library
 - [ ] `InsightGenerationWorker` - Generate insights from data
@@ -364,3 +368,47 @@ New modules added for competitor research and content generation pipeline.
 - [ ] `VideoGenerationWorker` - AI videos
 - [ ] `EmailDeliveryWorker` - Send via Swoosh
 - [ ] `WebhookDeliveryWorker` - POST with HMAC
+
+---
+
+## 15. Social Media Module (NEW)
+
+Social media scheduling and publishing functionality.
+
+### Schemas
+
+- [x] **Account** (`lib/phoenix_blog/social/account.ex`)
+  - Purpose: Connected social media accounts with OAuth tokens
+- [x] **Post** (`lib/phoenix_blog/social/post.ex`)
+  - Purpose: Social media posts (scheduled/published)
+- [x] **PostPlatform** (`lib/phoenix_blog/social/post_platform.ex`)
+  - Purpose: Join table for posts to platform accounts
+- [x] **AnalyticsRecord** (`lib/phoenix_blog/social/analytics_record.ex`)
+  - Purpose: Platform analytics data
+
+### Context
+
+- [x] **Social** (`lib/phoenix_blog/social.ex`)
+  - Purpose: Account/Post CRUD, scheduling, analytics
+
+### Oban Workers
+
+- [x] **PublishPostWorker** (`lib/phoenix_blog/social/workers/publish_post_worker.ex`)
+  - Purpose: Publish posts to platforms
+- [x] **ScheduledPublisherWorker** (`lib/phoenix_blog/social/workers/scheduled_publisher_worker.ex`)
+  - Purpose: Process scheduled posts
+- [x] **FetchAnalyticsWorker** (`lib/phoenix_blog/social/workers/fetch_analytics_worker.ex`)
+  - Purpose: Fetch post analytics from platforms
+- [x] **BatchAnalyticsWorker** (`lib/phoenix_blog/social/workers/batch_analytics_worker.ex`)
+  - Purpose: Batch analytics fetching
+- [x] **TokenRefreshWorker** (`lib/phoenix_blog/social/workers/token_refresh_worker.ex`)
+  - Purpose: Refresh expiring OAuth tokens
+
+### Utilities
+
+- [x] **OAuth** (`lib/phoenix_blog/social/oauth.ex`)
+  - Purpose: OAuth flow helpers
+- [x] **ContentGenerator** (`lib/phoenix_blog/social/content_generator.ex`)
+  - Purpose: AI content generation for social posts
+- [x] **TwitterClient** (`lib/phoenix_blog/social/clients/twitter_client.ex`)
+  - Purpose: Twitter/X API integration
