@@ -340,12 +340,12 @@ New modules added for competitor research and content generation pipeline.
   - Purpose: Competitor CRUD
 - [x] **Costs** (`lib/phoenix_blog/costs.ex`)
   - Purpose: Cost recording and aggregation
-- [ ] **Insights** (`lib/phoenix_blog/insights.ex`)
-  - Purpose: Insight CRUD - Not yet created (schema exists)
-- [ ] **Generations** (`lib/phoenix_blog/generations.ex`)
-  - Purpose: Generation queue management - Not yet created (schema exists)
-- [ ] **Delivery** (`lib/phoenix_blog/delivery.ex`)
-  - Purpose: Webhook/email delivery - Not yet created (schema exists)
+- [x] **Insights** (`lib/phoenix_blog/insights.ex`)
+  - Purpose: Insight CRUD with activation, archiving, usage tracking, search
+- [x] **Generations** (`lib/phoenix_blog/generations.ex`)
+  - Purpose: Generation queue management, status tracking, delivery, cost aggregation
+- [x] **Delivery** (`lib/phoenix_blog/delivery.ex`)
+  - Purpose: Webhook management with HMAC signing, failure tracking
 
 ### Database Migrations
 

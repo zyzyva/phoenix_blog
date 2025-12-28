@@ -41,7 +41,7 @@ defmodule PhoenixBlog.Delivery.Webhook do
   def trigger_changeset(webhook, true, _error) do
     webhook
     |> change(%{
-      last_triggered_at: DateTime.utc_now(),
+      last_triggered_at: DateTime.utc_now() |> DateTime.truncate(:second),
       failure_count: 0,
       last_error: nil
     })
@@ -53,7 +53,7 @@ defmodule PhoenixBlog.Delivery.Webhook do
 
     webhook
     |> change(%{
-      last_triggered_at: DateTime.utc_now(),
+      last_triggered_at: DateTime.utc_now() |> DateTime.truncate(:second),
       failure_count: new_count,
       last_error: error,
       status: status

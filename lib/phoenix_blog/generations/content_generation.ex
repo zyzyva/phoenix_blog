@@ -82,7 +82,7 @@ defmodule PhoenixBlog.Generations.ContentGeneration do
 
   def deliver_changeset(generation) do
     generation
-    |> change(%{status: "delivered", delivered_at: DateTime.utc_now()})
+    |> change(%{status: "delivered", delivered_at: DateTime.utc_now() |> DateTime.truncate(:second)})
   end
 
   def content_types, do: @content_types
